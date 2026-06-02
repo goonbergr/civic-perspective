@@ -15,16 +15,16 @@ const { db, DataTypes } = require("../db");
 const User = db.define(
   "user",
   {
-    fullName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
     userName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [4, 20],
+      },
+      fullName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
       },
     },
     email: {
