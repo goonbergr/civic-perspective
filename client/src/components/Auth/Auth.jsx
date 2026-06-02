@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./auth.css";
 
+let [fullName, setFullName] = useState("");
 export default function Auth({ updateSessionToken }) {
-  let [fullName, setFullName] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [register, setRegister] = useState(true);
@@ -57,4 +57,37 @@ export default function Auth({ updateSessionToken }) {
       * we can define method, body, headers, and lots of other things
     */
   };
+  return (
+    <>
+      <form action="" className="auth-component">
+        {renderRegister()}
+        <input
+          type="email"
+          value={email}
+          name="email"
+          id="email"
+          placeholder="Enter Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          value={password}
+          name="password"
+          id="password"
+          placeholder="Enter Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          onClick={apiPOST}
+          type="button"
+          className="auth-btn primary-btn">
+          Go
+        </button>
+      </form>
+
+      <button className="primary-btn" onClick={toggleRegister}>
+        {toggleBtn()}
+      </button>
+    </>
+  );
 }
