@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./auth.css";
-
-let [fullName, setFullName] = useState("");
 export default function Auth({ updateSessionToken }) {
+  let [fullName, setFullName] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [register, setRegister] = useState(true);
@@ -29,7 +28,7 @@ export default function Auth({ updateSessionToken }) {
   const toggleBtn = () => (register ? "Need to login?" : "Need to register?");
 
   const apiPOST = (e) => {
-    // e.preventDefault()
+    e.preventDefault();
 
     const url = register
       ? "http://127.0.0.1:4000/api/register"
