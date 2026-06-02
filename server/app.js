@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const PORT = process.env.PORT || 4000;
 const HOST = process.env.HOST || "127.0.0.1";
@@ -11,23 +12,27 @@ const sessionValidation = require("./middlewares/validate");
 // import our sequelize database config
 const { db } = require("./db");
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", auth);
-// app.use("/api", sessionValidation, routes);
+app.use("/api", sessionValidation, routes);
 
-app.listen(PORT, HOST, async () => {
+async function startServer() {
   try {
-    // establish connection to an existing database
+    // Ensure models are registered and tables exist before serving requests.
     await db.authenticate();
-    // syncs all of our schemas to the database
     await db.sync({ force: false });
-    console.log(`[server] listening on ${HOST}:${PORT}`);
-    console.log(`[database] running`);
+
+    app.listen(PORT, HOST, () => {
+      console.log(`[server] listening on ${HOST}:${PORT}`);
+      console.log(`[database] running`);
+    });
   } catch (err) {
     console.error(err);
+    process.exit(1);
   }
-});
+}
 
 /* 
 	? Object Relational Mapper (ORM)
@@ -36,6 +41,8 @@ app.listen(PORT, HOST, async () => {
 	* it holds all transactions up to ACID standards
 	* it also allows the handling of schema and model creation and modification
 */
+
+startServer();
 
 /* 
 	? Database Setup Notes
