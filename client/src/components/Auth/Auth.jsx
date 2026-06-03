@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./auth.css";
+import "./Auth.css";
 export default function Auth({ updateSessionToken }) {
   let [fullName, setFullName] = useState("");
   let [email, setEmail] = useState("");

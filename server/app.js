@@ -2,23 +2,24 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { db } = require("./db");
 
 const PORT = process.env.PORT || 4000;
 const HOST = process.env.HOST || "127.0.0.1";
 
 const auth = require("./routes/auth");
-const routes = require("./routes/routes");
+// const routes = require("./routes/routes");
 // import session validation
 const sessionValidation = require("./middlewares/validate");
 // import our sequelize database config
-const { db } = require("./db");
 require("./models/auth");
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", auth);
-app.use("/api", sessionValidation, routes);
+app.use("/api", sessionValidation);
+// app.use("/api", sessionValidation, routes);
 
 async function startServer() {
   try {
